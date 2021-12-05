@@ -1,7 +1,8 @@
 /**
  * Parser - Will read raylib_api.json and will attempt to write the API.
  */
-const api = require('../vendor/raylib/parser/raylib_api.json')
+//const api = require('../vendor/raylib/parser/raylib_api.json')
+const api = require('./raylib_api.json')
 
 function enums_header() {
     return `void raylib_enums() {\n`
@@ -12,7 +13,35 @@ function enums_footer() {
 }
 
 function enums_body(allEnums) {
-    let output = ''
+    let output = `    // Colors
+    constant("LIGHTGRAY", LIGHTGRAY);
+    constant("GRAY", GRAY);
+    constant("DARKGRAY", DARKGRAY);
+    constant("YELLOW", YELLOW);
+    constant("GOLD", GOLD);
+    constant("ORANGE", ORANGE);
+    constant("PINK", PINK);
+    constant("RED", RED);
+    constant("MAROON", MAROON);
+    constant("GREEN", GREEN);
+    constant("LIME", LIME);
+    constant("DARKGREEN", DARKGREEN);
+    constant("SKYBLUE", SKYBLUE);
+    constant("BLUE", BLUE);
+    constant("DARKBLUE", DARKBLUE);
+    constant("PURPLE", PURPLE);
+    constant("VIOLET", VIOLET);
+    constant("DARKPURPLE", DARKPURPLE);
+    constant("BEIGE", BEIGE);
+    constant("BROWN", BROWN);
+    constant("DARKBROWN", DARKBROWN);
+    constant("WHITE", WHITE);
+    constant("BLACK", BLACK);
+    constant("BLANK", BLANK);
+    constant("MAGENTA", MAGENTA);
+    constant("RAYWHITE", RAYWHITE);
+    \n`
+
     for (let family of allEnums) {
         for (let val of family.values) {
             output += `    constant("${val.name}", ${val.name});\n`
@@ -96,23 +125,45 @@ function functions_body(allFunctions) {
         "GetPrevDirectoryPath",
         "GetWorkingDirectory",
         "GetDirectoryFiles",
-        "ClearDirectoryFiles",
         "ChangeDirectory",
-        "IsFileDropped",
         "GetDroppedFiles",
-        "ClearDroppedFiles",
-        "GetFileModTime"
+        "GetFileModTime",
+        "OpenURL",
+        "UpdateCamera",
+        "LoadImage",
+        "LoadImageRaw",
+        "LoadImageAnim",
+        "LoadImageFromMemory",
+        "ExportImage",
+        "ExportImageAsCode"
     ]
     for (let func of allFunctions) {
         switch (func.name) {
+            // Skipped functions
+            case 'TraceLog':
+                break;
             default:
                 let finalFuncName = func.name
-                if (wrapperFunctions[func.name]) {
-                    finalFuncName = 'raylib::' + func.name
+                if (wrapperFunctions.includes(finalFuncName)) {
+                    finalFuncName = 'raylib::' + finalFuncName
                 }
+
                 // Ensure it's valid function
-                if (func.params && func.params["callback"] == undefined) {
+                let valid = true;
+                if (func.params) {
+                    if (func.params["callback"]) {
+                        valid = false
+                    }
+                }
+                if (func.returnType == "void *") {
+                    valid = false
+                }
+
+                if (valid) {
                     output += `    function("${func.name}", &${finalFuncName});\n`
+                }
+                else {
+                    output += `    // function("${func.name}", &${finalFuncName});\n`
                 }
                 break
         }

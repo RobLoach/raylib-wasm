@@ -13,7 +13,7 @@ window.myApp = {
         requestAnimationFrame(loop)
     },
     onWindowClose: () => {
-        window.myApp.raylib.CloseWindow()
+        raylib.CloseWindow()
         Neutralino.app.exit()
     }
 };
@@ -25,7 +25,7 @@ Neutralino.events.on("ready", () => {
         canvas: document.getElementById("canvas")
     }
     raylib(options).then((r) => {
-        window.myApp.raylib = r
+        window.raylib = r
         window.myApp.run(r)
     })
 })

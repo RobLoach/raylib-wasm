@@ -34,7 +34,7 @@
       "globalVariables": {
         "TEST": "Test value browser"
       },
-      "nativeBlockList": [
+      "nativeAllowList": [
         "filesystem.*"
       ]
     },

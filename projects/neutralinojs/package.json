@@ -2,15 +2,18 @@
   "name": "raylib-neutralinojs",
   "version": "0.0.1",
   "description": "",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "neu run",
-    "prestart": "neu build"
+    "prestart": "neu build",
+    "postinstall": "neu update",
+    "build": "neu build --release"
   },
   "author": "Rob Loach",
   "license": "MIT",
   "dependencies": {
-    "@neutralinojs/neu": "^7.0.1"
+    "@neutralinojs/neu": "7.0.1"
   }
 }
