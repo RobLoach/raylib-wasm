@@ -8,11 +8,6 @@
 
 using namespace emscripten;
 
-Camera UpdateCameraWrapper(Camera camera) {
-    UpdateCamera(&camera);
-    return camera;
-}
-
 EMSCRIPTEN_BINDINGS(raylib) {
     raylib_structs();
     raylib_constants();

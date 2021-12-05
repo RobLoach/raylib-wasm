@@ -8,6 +8,12 @@
 
 using namespace emscripten;
 
+
+Camera UpdateCameraWrapper(Camera camera) {
+    UpdateCamera(&camera);
+    return camera;
+}
+
 void TraceLogWrapper(int logLevel, const std::string& text) {
     int emscriptenLog = EM_LOG_CONSOLE;
     switch (logLevel) {
@@ -33,6 +39,7 @@ void TraceLogWrapper(int logLevel, const std::string& text) {
 
 void raylib_functions_extra() {
     function("TraceLog", &TraceLogWrapper);
+    function("UpdateCamera", &UpdateCameraWrapper);
 }
 
 #endif

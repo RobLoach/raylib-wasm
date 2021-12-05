@@ -11,4 +11,5 @@ Very much a Work-In-Progress. *raylib-wasm* is a [WebAssembly](https://en.wikipe
 
 ```
 npm it
+npm start
 ```
