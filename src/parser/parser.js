@@ -1,7 +1,8 @@
 /**
  * Parser - Will read raylib_api.json and will attempt to write the API.
+ *
+ * https://github.com/raysan5/raylib/blob/master/parser/raylib_api.json
  */
-//const api = require('../vendor/raylib/parser/raylib_api.json')
 const api = require('./raylib_api.json')
 
 function enums_header() {

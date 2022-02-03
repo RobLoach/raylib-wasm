@@ -1,7 +1,7 @@
 {
   "name": "raylib",
   "version": "0.0.1",
-  "description": "",
+  "description": "WebAssembly build of raylib.",
   "private": true,
   "main": "build/raylib.js",
   "files": [
@@ -15,18 +15,18 @@
     "build": "emmake make -C build",
     "parser": "node src/parser.js",
     "clean": "emmake make clean -C build",
-    "start": "light-server --no-reload -o -s . --historyindex '/example/index.html'"
+    "start": "light-server -o -s . --historyindex '/example/index.html'"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RobLoach/node-raylib.git"
+    "url": "https://github.com/RobLoach/raylib-wasm.git"
   },
   "author": "Rob Loach",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RobLoach/node-raylib/issues"
+    "url": "https://github.com/RobLoach/raylib-wasm/issues"
   },
-  "homepage": "https://github.com/RobLoach/node-raylib#readme",
+  "homepage": "https://github.com/RobLoach/raylib-wasm#readme",
   "devDependencies": {
     "light-server": "^2.9.1",
     "mocha": "^8.2.1"

@@ -2,7 +2,7 @@
 #define RAYLIB_STRUCTS
 
 #include <emscripten/bind.h>
-#include <raylib-cpp.hpp>
+#include <raylib.h>
 
 using namespace emscripten;
 
@@ -94,7 +94,8 @@ void raylib_structs() {
         .field("target", &Camera2D::target)
         .field("rotation", &Camera2D::rotation)
         .field("zoom", &Camera2D::zoom)
-    ;/*
+    ;
+    /*
     value_object<Mesh>("Mesh")
         .field("vertexCount", &Mesh::vertexCount)
         .field("triangleCount", &Mesh::triangleCount)
@@ -112,25 +113,32 @@ void raylib_structs() {
         .field("vaoId", &Mesh::vaoId)
         .field("vboId", &Mesh::vboId)
     ;
+    */
+    /*
     value_object<Shader>("Shader")
         .field("id", &Shader::id)
         .field("locs", &Shader::locs)
     ;
+    */
     value_object<MaterialMap>("MaterialMap")
         .field("texture", &MaterialMap::texture)
         .field("color", &MaterialMap::color)
         .field("value", &MaterialMap::value)
     ;
+    /*
     value_object<Material>("Material")
         .field("shader", &Material::shader)
         .field("maps", &Material::maps)
     ;
+    */
     value_object<Transform>("Transform")
         .field("translation", &Transform::translation)
         .field("rotation", &Transform::rotation)
         .field("scale", &Transform::scale)
     ;
+    /*
     value_object<BoneInfo>("BoneInfo")
+        .field("name", &BoneInfo::name)
         .field("parent", &BoneInfo::parent)
     ;
     value_object<Model>("Model")
@@ -150,6 +158,7 @@ void raylib_structs() {
         .field("bones", &ModelAnimation::bones)
         .field("framePoses", &ModelAnimation::framePoses)
     ;
+    */
     value_object<Ray>("Ray")
         .field("position", &Ray::position)
         .field("direction", &Ray::direction)
@@ -164,21 +173,29 @@ void raylib_structs() {
         .field("min", &BoundingBox::min)
         .field("max", &BoundingBox::max)
     ;
+    /*
     value_object<Wave>("Wave")
         .field("sampleRate", &Wave::sampleRate)
         .field("sampleSize", &Wave::sampleSize)
         .field("channels", &Wave::channels)
         .field("data", &Wave::data)
     ;
+    */
+    /*
     value_object<AudioStream>("AudioStream")
         .field("buffer", &AudioStream::buffer)
         .field("sampleRate", &AudioStream::sampleRate)
         .field("sampleSize", &AudioStream::sampleSize)
         .field("channels", &AudioStream::channels)
     ;
+    */
+    /*
     value_object<Sound>("Sound")
         .field("stream", &Sound::stream)
+        .field("frameCount", &Sound::frameCount)
     ;
+    */
+    /*
     value_object<Music>("Music")
         .field("stream", &Music::stream)
         .field("sampleCount", &Music::sampleCount)
@@ -186,6 +203,8 @@ void raylib_structs() {
         .field("ctxType", &Music::ctxType)
         .field("ctxData", &Music::ctxData)
     ;
+    */
+    /*
     value_object<VrDeviceInfo>("VrDeviceInfo")
         .field("hResolution", &VrDeviceInfo::hResolution)
         .field("vResolution", &VrDeviceInfo::vResolution)
@@ -196,9 +215,11 @@ void raylib_structs() {
         .field("lensSeparationDistance", &VrDeviceInfo::lensSeparationDistance)
         .field("interpupillaryDistance", &VrDeviceInfo::interpupillaryDistance)
     ;
+    */
+    /*
     value_object<VrStereoConfig>("VrStereoConfig")
     ;
-*/
+    */
 
 }
 

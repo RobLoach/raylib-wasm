@@ -351,20 +351,20 @@ void raylib_functions() {
     // function("CodepointToUTF8", &CodepointToUTF8);
     // function("TextCodepointsToUTF8", &TextCodepointsToUTF8);
     // function("TextCopy", &TextCopy);
-    // function("TextIsEqual", &TextIsEqual);
-    // function("TextLength", &TextLength);
+    function("TextIsEqual", &raylib::TextIsEqual);
+    function("TextLength", &raylib::TextLength);
     // function("TextFormat", &TextFormat);
-    // function("TextSubtext", &TextSubtext);
-    // function("TextReplace", &TextReplace);
-    // function("TextInsert", &TextInsert);
+    function("TextSubtext", &raylib::TextSubtext);
+    function("TextReplace", &raylib::TextReplace);
+    function("TextInsert", &raylib::TextInsert);
     // function("TextJoin", &TextJoin);
     // function("TextSplit", &TextSplit);
     // function("TextAppend", &TextAppend);
     // function("TextFindIndex", &TextFindIndex);
-    // function("TextToUpper", &TextToUpper);
-    // function("TextToLower", &TextToLower);
-    // function("TextToPascal", &TextToPascal);
-    // function("TextToInteger", &TextToInteger);
+    function("TextToUpper", &raylib::TextToUpper);
+    function("TextToLower", &raylib::TextToLower);
+    function("TextToPascal", &raylib::TextToPascal);
+    function("TextToInteger", &raylib::TextToInteger);
     function("DrawLine3D", &DrawLine3D);
     function("DrawPoint3D", &DrawPoint3D);
     function("DrawCircle3D", &DrawCircle3D);
@@ -492,8 +492,6 @@ void raylib_functions() {
     function("SetAudioStreamVolume", &SetAudioStreamVolume);
     function("SetAudioStreamPitch", &SetAudioStreamPitch);
     function("SetAudioStreamBufferSizeDefault", &SetAudioStreamBufferSizeDefault);
-
-
 }
 
 #endif

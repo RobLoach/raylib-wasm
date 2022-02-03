@@ -30,7 +30,7 @@ if (NOT raylib_cpp_FOUND)
   FetchContent_Declare(
     raylib_cpp
     GIT_REPOSITORY https://github.com/RobLoach/raylib-cpp.git
-    GIT_TAG v4.0.4
+    GIT_TAG v4.1.0
   )
   FetchContent_GetProperties(raylib_cpp)
   if (NOT raylib_cpp_POPULATED)
