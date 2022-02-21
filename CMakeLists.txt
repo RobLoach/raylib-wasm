@@ -15,13 +15,7 @@ if (NOT raylib_FOUND)
     GIT_REPOSITORY https://github.com/raysan5/raylib.git
     GIT_TAG 4.0.0
   )
-  FetchContent_GetProperties(raylib)
-  if (NOT raylib_POPULATED)
-    set(FETCHCONTENT_QUIET NO)
-    FetchContent_Populate(raylib)
-    set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-    add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
-  endif()
+  FetchContent_MakeAvailable(raylib)
 endif()
 
 find_package(raylib_cpp QUIET)
@@ -32,13 +26,7 @@ if (NOT raylib_cpp_FOUND)
     GIT_REPOSITORY https://github.com/RobLoach/raylib-cpp.git
     GIT_TAG v4.1.0
   )
-  FetchContent_GetProperties(raylib_cpp)
-  if (NOT raylib_cpp_POPULATED)
-    set(FETCHCONTENT_QUIET NO)
-    FetchContent_Populate(raylib_cpp)
-    set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-    add_subdirectory(${raylib_cpp_SOURCE_DIR} ${raylib_cpp_BINARY_DIR})
-  endif()
+  FetchContent_MakeAvailable(raylib_cpp)
 endif()
 
 add_executable(raylib-wasm

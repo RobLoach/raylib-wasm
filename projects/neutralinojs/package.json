@@ -14,7 +14,7 @@
   "author": "Rob Loach",
   "license": "MIT",
   "dependencies": {
-    "@neutralinojs/neu": "7.0.1",
+    "@neutralinojs/neu": "~9.2.0",
     "raylib": "file:../.."
   }
 }
