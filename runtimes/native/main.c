@@ -95,28 +95,32 @@ int main(int argc, char *argv[]) {
     TraceLog(LOG_INFO, "m3_ParseModule");
     IM3Module module;
     result = m3_ParseModule (env, &module, fileData, bytesRead);
+    UnloadFileData(fileData);
     if (result) TraceLog(LOG_FATAL, "m3_ParseModule: %s", result);
 
     TraceLog(LOG_INFO, "m3_LoadModule");
     module->memoryImported = true;
     TraceLog(LOG_INFO, "m3_LoadModule2");
-    result = m3_LoadModule (runtime, module);
+    result = m3_LoadModule(runtime, module);
     TraceLog(LOG_INFO, "m3_LoadModule3");
-    if (result) TraceLog(LOG_FATAL, "m3_LoadModule: %s", result);
+    if (result) {
+        TraceLog(LOG_FATAL, "m3_LoadModule: %s", result);
+    }
 
     TraceLog(LOG_INFO, "m3_LinkRawFunction");
     m3_LinkRawFunction(module, "env", "InitWindow", "v(iii)", InitWindowBinding);
     m3_LinkRawFunction(module, "env", "TraceLog", "v(ii)", TraceLogBinding);
     m3_LinkRawFunction(module, "env", "CloseWindow", "v()", CloseWindowBinding);
     m3_LinkRawFunction(module, "env", "BeginDrawing", "v()", BeginDrawingBinding);
-    m3_LinkRawFunction(module, "env", "ClearBackgroundExpanded", "v(i)", ClearBackgroundExpandedBinding);
-    m3_LinkRawFunction(module, "env", "DrawTextExpanded", "v(iiiii)", DrawTextExpandedBinding);
+    m3_LinkRawFunction(module, "env", "ClearBackgroundExpanded", "v(iiii)", ClearBackgroundExpandedBinding);
+    m3_LinkRawFunction(module, "env", "DrawTextExpanded", "v(iiiiiiii)", DrawTextExpandedBinding);
     m3_LinkRawFunction(module, "env", "SetTargetFPS", "v(i)", SetTargetFPSBinding);
     m3_LinkRawFunction(module, "env", "EndDrawing", "v()", EndDrawingBinding);
+
     TraceLog(LOG_INFO, "m3_FindFunction");
 
     IM3Function f;
-    result = m3_FindFunction (&f, runtime, "Init");
+    result = m3_FindFunction(&f, runtime, "Init");
 
     if (result) {
         TraceLog(LOG_WARNING, "Init() not found: %s", result);
@@ -130,19 +134,33 @@ int main(int argc, char *argv[]) {
 
     TraceLog(LOG_INFO, "m3_FindFunction");
 
-    result = m3_FindFunction (&f, runtime, "UpdateDrawFrame");
+    result = m3_FindFunction(&f, runtime, "UpdateDrawFrame");
     if (result) {
         TraceLog(LOG_WARNING, "UpdateDrawFrame() not found: %s", result);
-        CloseWindow();
     }
     else {
         while (!WindowShouldClose()) {
             result = m3_CallV(f);
             if (result) {
                 TraceLog(LOG_FATAL, "Call: %s", result);
-                CloseWindow();
             }
         }
+    }
+
+    // Close()
+    result = m3_FindFunction(&f, runtime, "Close");
+    if (result) {
+        TraceLog(LOG_WARNING, "Close() not found: %s", result);
+    }
+    else {
+        result = m3_CallV(f);
+        if (result) {
+            TraceLog(LOG_FATAL, "Failed to call Close(): %s", result);
+        }
+    }
+
+    if (IsWindowReady()) {
+        CloseWindow();
     }
 
     // result = m3_CallV (f, 40);
