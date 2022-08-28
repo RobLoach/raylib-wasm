@@ -1,3 +1,4 @@
+#define RAYLIB_WASM_IMPLEMENTATION
 #include "raylib-wasm.h"
 
 void Init() {
@@ -19,7 +20,7 @@ void UpdateDrawFrame() {
 
         ClearBackground(RAYWHITE);
 
-        DrawText("Congrats! You created your first raylib-cpp window!", 190, 200, 20, LIGHTGRAY);
+        //DrawText("Congrats! You created your first raylib-cpp window!", 190, 200, 20, LIGHTGRAY);
 
     EndDrawing();
     //----------------------------------------------------------------------------------
@@ -27,4 +28,8 @@ void UpdateDrawFrame() {
     // if (WindowShouldClose()) {
     //     CloseWindow();
     // }
+}
+
+void Close() {
+    CloseWindow();
 }

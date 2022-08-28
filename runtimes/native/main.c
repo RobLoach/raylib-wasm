@@ -5,7 +5,7 @@
 static m3ApiRawFunction (InitWindowBinding) {
     m3ApiGetArg(int, width);
     m3ApiGetArg(int, height);
-    m3ApiGetArg(const char *, title);
+    m3ApiGetArgMem(const char *, title);
     InitWindow(width, height, title);
     m3ApiSuccess();
 }
@@ -15,19 +15,34 @@ static m3ApiRawFunction (BeginDrawingBinding) {
     m3ApiSuccess();
 }
 
-static m3ApiRawFunction (ClearBackgroundBinding) {
-    m3ApiGetArg(Color, color);
+#define m3ApiGetColor(colorName) \
+    m3ApiGetArg(int, r); \
+    m3ApiGetArg(int, g); \
+    m3ApiGetArg(int, b); \
+    m3ApiGetArg(int, a); \
+    Color colorName = {r, g, b, a}
+
+static m3ApiRawFunction (ClearBackgroundExpandedBinding) {
+    m3ApiGetColor(color);
     ClearBackground(color);
     m3ApiSuccess();
 }
 
-static m3ApiRawFunction (DrawTextBinding) {
-    m3ApiGetArg(const char *, text);
+static m3ApiRawFunction (DrawTextExpandedBinding) {
+    m3ApiGetArgMem(const char *, text);
     m3ApiGetArg(int, posX);
     m3ApiGetArg(int, posY);
     m3ApiGetArg(int, fontSize);
-    m3ApiGetArg(Color, color);
+    m3ApiGetColor(color);
+    TraceLog(LOG_INFO, "a: %i", color.r);
     DrawText(text, posX, posY, fontSize, color);
+    m3ApiSuccess();
+}
+
+static m3ApiRawFunction (TraceLogBinding) {
+    m3ApiGetArg(int, logLevel);
+    m3ApiGetArgMem(const char *, text);
+    TraceLog(logLevel, text);
     m3ApiSuccess();
 }
 
@@ -39,6 +54,11 @@ static m3ApiRawFunction (SetTargetFPSBinding) {
 
 static m3ApiRawFunction (EndDrawingBinding) {
     EndDrawing();
+    m3ApiSuccess();
+}
+
+static m3ApiRawFunction (CloseWindowBinding) {
+    CloseWindow();
     m3ApiSuccess();
 }
 
@@ -86,16 +106,17 @@ int main(int argc, char *argv[]) {
 
     TraceLog(LOG_INFO, "m3_LinkRawFunction");
     m3_LinkRawFunction(module, "env", "InitWindow", "v(iii)", InitWindowBinding);
-    m3_LinkRawFunction(module, "env", "BeginDrawing", "v()", InitWindowBinding);
-    m3_LinkRawFunction(module, "env", "ClearBackground", "v(i)", InitWindowBinding);
-    m3_LinkRawFunction(module, "env", "DrawText", "v(iiiii)", InitWindowBinding);
-    m3_LinkRawFunction(module, "env", "SetTargetFPS", "v(i)", InitWindowBinding);
-    m3_LinkRawFunction(module, "env", "EndDrawing", "v()", InitWindowBinding);
+    m3_LinkRawFunction(module, "env", "TraceLog", "v(ii)", TraceLogBinding);
+    m3_LinkRawFunction(module, "env", "CloseWindow", "v()", CloseWindowBinding);
+    m3_LinkRawFunction(module, "env", "BeginDrawing", "v()", BeginDrawingBinding);
+    m3_LinkRawFunction(module, "env", "ClearBackgroundExpanded", "v(i)", ClearBackgroundExpandedBinding);
+    m3_LinkRawFunction(module, "env", "DrawTextExpanded", "v(iiiii)", DrawTextExpandedBinding);
+    m3_LinkRawFunction(module, "env", "SetTargetFPS", "v(i)", SetTargetFPSBinding);
+    m3_LinkRawFunction(module, "env", "EndDrawing", "v()", EndDrawingBinding);
     TraceLog(LOG_INFO, "m3_FindFunction");
 
     IM3Function f;
     result = m3_FindFunction (&f, runtime, "Init");
-    TraceLog(LOG_INFO, "FDSAOFASDFASD");
 
     if (result) {
         TraceLog(LOG_WARNING, "Init() not found: %s", result);

@@ -13,7 +13,7 @@ if (NOT raylib_FOUND)
         FetchContent_Declare(
         raylib
         GIT_REPOSITORY https://github.com/raysan5/raylib.git
-        GIT_TAG 4.0.0
+        GIT_TAG 4.2.0
     )
     FetchContent_GetProperties(raylib)
     if (NOT raylib_POPULATED) # Have we downloaded raylib yet?
@@ -32,7 +32,7 @@ if (NOT wasm3_FOUND)
         FetchContent_Declare(
         wasm3
         GIT_REPOSITORY https://github.com/wasm3/wasm3.git
-        GIT_TAG 8523770b80ea1f78afcac21d837f9dfd50f0bed6
+        GIT_TAG v0.5.0
     )
     FetchContent_GetProperties(wasm3)
     if (NOT wasm3_POPULATED) # Have we downloaded raylib yet?
