@@ -59,15 +59,20 @@ typedef enum {
 
 // Color, 4 components, R8G8B8A8 (32bit)
 typedef struct Color {
-    int r;        // Color red value
-    int g;        // Color green value
-    int b;        // Color blue value
-    int a;        // Color alpha value
+    unsigned char r;        // Color red value
+    unsigned char g;        // Color green value
+    unsigned char b;        // Color blue value
+    unsigned char a;        // Color alpha value
 } Color;
 
-WASM_EXPORT("Init") void Init();
-WASM_EXPORT("UpdateDrawFrame") void UpdateDrawFrame();
-WASM_EXPORT("Close") void Close();
+WASM_EXPORT("Init")
+void Init();
+
+WASM_EXPORT("UpdateDrawFrame")
+void UpdateDrawFrame();
+
+WASM_EXPORT("Close")
+void Close();
 
 WASM_IMPORT("InitWindow")
 void InitWindow(int width, int height, const char *title);
@@ -76,10 +81,13 @@ WASM_IMPORT("BeginDrawing")
 void BeginDrawing();
 
 WASM_IMPORT("ClearBackgroundExpanded")
-void ClearBackgroundExpanded(int r, int g, int b, int a);
+void ClearBackgroundExpanded(uint32_t color);
 
 WASM_IMPORT("DrawTextExpanded")
-void DrawTextExpanded(const char *text, int posX, int posY, int fontSize, int r, int g, int b, int a);
+void DrawTextExpanded(const char *text, int posX, int posY, int fontSize, uint32_t color);
+
+WASM_IMPORT("ClearBackground")
+void ClearBackground();
 
 WASM_IMPORT("SetTargetFPS")
 void SetTargetFPS(int fps);
@@ -93,12 +101,28 @@ void CloseWindow();
 WASM_IMPORT("TraceLog")
 void TraceLog(int logLevel, const char* text);
 
-#ifndef ClearBackground
-#define ClearBackground(color) ClearBackgroundExpanded((color).r, (color).g, (color).b, (color).a)
-#endif
+// Function wrappers
+uint32_t ColorToUInt(Color color);
+void ClearBackground(Color color);
+void DrawText(const char* text, int posX, int posY, int fontSize, Color color);
 
-#ifndef DrawText
-#define DrawText(text, posX, posY, fontSize, color) DrawTextExpanded((text), (posX), (posY), (fontSize), (color).r, (color).g, (color).b, (color).a)
-#endif
+#ifdef RAYLIB_WASM_IMPLEMENTATION
+#ifndef RAYLIB_WASM_IMPLEMENTATION_ONCE
+#define RAYLIB_WASM_IMPLEMENTATION_ONCE
+
+uint32_t ColorToUInt(Color color) {
+    return ((uint32_t)color.r << 24) | ((uint32_t)color.g << 16) | ((uint32_t)color.b << 8) | (uint32_t)color.a;
+}
+
+void ClearBackground(Color color) {
+    ClearBackgroundExpanded(ColorToUInt(color));
+}
+
+void DrawText(const char* text, int posX, int posY, int fontSize, Color color) {
+    DrawTextExpanded(text, posX, posY, fontSize, ColorToUInt(color));
+}
+
+#endif  // RAYLIB_WASM_IMPLEMENTATION_ONCE
+#endif  // RAYLIB_WASM_IMPLEMENTATION
 
 #endif  // RAYLIB_WASM
