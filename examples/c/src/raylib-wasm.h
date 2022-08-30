@@ -81,10 +81,10 @@ WASM_IMPORT("BeginDrawing")
 void BeginDrawing();
 
 WASM_IMPORT("ClearBackgroundExpanded")
-void ClearBackgroundExpanded(uint32_t color);
+void ClearBackgroundExpanded(int r, int g, int b, int a);
 
 WASM_IMPORT("DrawTextExpanded")
-void DrawTextExpanded(const char *text, int posX, int posY, int fontSize, uint32_t color);
+void DrawTextExpanded(const char *text, int posX, int posY, int fontSize, int r, int g, int b, int a);
 
 WASM_IMPORT("ClearBackground")
 void ClearBackground();
@@ -102,7 +102,6 @@ WASM_IMPORT("TraceLog")
 void TraceLog(int logLevel, const char* text);
 
 // Function wrappers
-uint32_t ColorToUInt(Color color);
 void ClearBackground(Color color);
 void DrawText(const char* text, int posX, int posY, int fontSize, Color color);
 
@@ -110,16 +109,12 @@ void DrawText(const char* text, int posX, int posY, int fontSize, Color color);
 #ifndef RAYLIB_WASM_IMPLEMENTATION_ONCE
 #define RAYLIB_WASM_IMPLEMENTATION_ONCE
 
-uint32_t ColorToUInt(Color color) {
-    return ((uint32_t)color.r << 24) | ((uint32_t)color.g << 16) | ((uint32_t)color.b << 8) | (uint32_t)color.a;
-}
-
 void ClearBackground(Color color) {
-    ClearBackgroundExpanded(ColorToUInt(color));
+    ClearBackgroundExpanded(color.r, color.g, color.b, color.a);
 }
 
 void DrawText(const char* text, int posX, int posY, int fontSize, Color color) {
-    DrawTextExpanded(text, posX, posY, fontSize, ColorToUInt(color));
+    DrawTextExpanded(text, posX, posY, fontSize, color.r, color.g, color.b, color.a);
 }
 
 #endif  // RAYLIB_WASM_IMPLEMENTATION_ONCE

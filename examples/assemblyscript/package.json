@@ -1,0 +1,16 @@
+{
+  "name": "raylib-wasm-asssemblyscript",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "asc --target release -Osize",
+    "build:debug": "asc --target debug"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "assemblyscript": "^0.21.2"
+  }
+}

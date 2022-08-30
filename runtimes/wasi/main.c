@@ -18,8 +18,16 @@ static m3ApiRawFunction (BeginDrawingBinding) {
 }
 
 static m3ApiRawFunction (ClearBackgroundExpandedBinding) {
-    m3ApiGetArg(uint32_t, colorNumber);
-    ClearBackground(GetColor(colorNumber));
+    m3ApiGetArg(int, colorR);
+    m3ApiGetArg(int, colorG);
+    m3ApiGetArg(int, colorB);
+    m3ApiGetArg(int, colorA);
+    Color color;
+    color.r = colorR;
+    color.g = colorG;
+    color.b = colorB;
+    color.a = colorA;
+    ClearBackground(color);
     m3ApiSuccess();
 }
 
@@ -28,8 +36,16 @@ static m3ApiRawFunction (DrawTextExpandedBinding) {
     m3ApiGetArg(int, posX);
     m3ApiGetArg(int, posY);
     m3ApiGetArg(int, fontSize);
-    m3ApiGetArg(uint32_t, colorNumber);
-    DrawText(text, posX, posY, fontSize, GetColor(colorNumber));
+    m3ApiGetArg(int, colorR);
+    m3ApiGetArg(int, colorG);
+    m3ApiGetArg(int, colorB);
+    m3ApiGetArg(int, colorA);
+    Color color;
+    color.r = colorR;
+    color.g = colorG;
+    color.b = colorB;
+    color.a = colorA;
+    DrawText(text, posX, posY, fontSize, color);
     m3ApiSuccess();
 }
 
@@ -61,7 +77,6 @@ static m3ApiRawFunction (CloseWindowBinding) {
     CloseWindow();
     m3ApiSuccess();
 }
-
 
 // all wasm3 functions return same sort of error-pattern, so this wraps that
 static void CheckWasm3Error(M3Runtime* runtime, M3Result result) {
@@ -133,8 +148,8 @@ int main(int argc, char *argv[]) {
     m3_LinkRawFunction(module, "env", "TraceLog", "v(ii)", &TraceLogBinding);
     m3_LinkRawFunction(module, "env", "CloseWindow", "v()", &CloseWindowBinding);
     m3_LinkRawFunction(module, "env", "BeginDrawing", "v()", &BeginDrawingBinding);
-    m3_LinkRawFunction(module, "env", "ClearBackgroundExpanded", "v(i)", ClearBackgroundExpandedBinding);
-    m3_LinkRawFunction(module, "env", "DrawTextExpanded", "v(iiiii)", DrawTextExpandedBinding);
+    m3_LinkRawFunction(module, "env", "ClearBackgroundExpanded", "v(iiii)", ClearBackgroundExpandedBinding);
+    m3_LinkRawFunction(module, "env", "DrawTextExpanded", "v(iiiiiiii)", DrawTextExpandedBinding);
     m3_LinkRawFunction(module, "env", "SetTargetFPS", "v(i)", &SetTargetFPSBinding);
     m3_LinkRawFunction(module, "env", "EndDrawing", "v()", &EndDrawingBinding);
     m3_LinkRawFunction(module, "env", "GetFPS", "i()", &GetFPSBinding);

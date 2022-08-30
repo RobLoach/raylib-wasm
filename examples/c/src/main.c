@@ -16,7 +16,7 @@ void UpdateDrawFrame() {
     BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        DrawText("Congrats! You created your first raylib-wasm window!", 150, 200, 20, LIGHTGRAY);
+        DrawText("Congrats! You created your first raylib-wasm C window!", 140, 200, 20, LIGHTGRAY);
     EndDrawing();
 }
 

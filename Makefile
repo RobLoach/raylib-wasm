@@ -1,13 +1,13 @@
-test: native c
-	runtimes/native/build/raylib-wasm examples/c/build/cart.wasm
+test: wasi c
+	runtimes/wasi/build/raylib-wasm examples/c/build/cart.wasm
 
 c:
 	$(MAKE) -C examples/c
 
-native:
-	cmake -B runtimes/native/build -S runtimes/native
-	$(MAKE) -C runtimes/native/build
+wasi:
+	cmake -B runtimes/wasi/build -S runtimes/wasi
+	$(MAKE) -C runtimes/wasi/build
 
 clean:
 	rm -rf examples/c/build
-	rm -rf runtimes/native/build
+	rm -rf runtimes/wasi/build

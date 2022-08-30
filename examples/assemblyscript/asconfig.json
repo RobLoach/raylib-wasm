@@ -1,0 +1,31 @@
+{
+    "entries": [
+      "./src/main"
+    ],
+    "options": {
+      "outFile": "build/cart.wasm",
+      "bindings": "build/cart.js",
+      "textFile": "build/cart.wat",
+      "runtime": "incremental",
+      "noExportMemory": true,
+      "initialMemory": 65536,
+      "maximumMemory": 65536,
+      "zeroFilledMemory": true,
+      "use": [
+        "trace="
+      ]
+    },
+    "targets": {
+      "release": {
+        "optimizeLevel": 0,
+        "shrinkLevel": 0,
+        "converge": false,
+        "noAssert": true,
+        "use": "abort="
+      },
+
+        "debug": {
+            "debug": true
+        }
+    }
+  }
