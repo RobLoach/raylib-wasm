@@ -19,7 +19,7 @@ export function Init() : void {
 export function UpdateDrawFrame() : void {
     BeginDrawing()
         ClearBackground(RAYWHITE)
-        DrawText("Congrats! You created your first raylib-wasm C window!", 140, 200, 20, LIGHTGRAY)
+        DrawText("Congrats! You created your first raylib-wasm assemblyscript window!", 140, 200, 20, LIGHTGRAY)
     EndDrawing()
 }
 
