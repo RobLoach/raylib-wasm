@@ -5,8 +5,8 @@
   "main": "src/main.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "asc --target release -Osize",
-    "build:debug": "asc --target debug"
+    "build": "asc --exportRuntime --target release -Osize",
+    "build:debug": "asc --exportRuntime --target debug"
   },
   "author": "",
   "license": "MIT",
