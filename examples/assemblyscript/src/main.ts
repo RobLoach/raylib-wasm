@@ -13,11 +13,10 @@ import {
 
 export function Init() : void {
     InitWindow(800, 450, "raylib-wasm")
-    // SetTargetFPS(60)
+    SetTargetFPS(60)
 }
 
 export function UpdateDrawFrame() : void {
-    TraceLog(LOG_INFO, "UPDATE")
     BeginDrawing()
         ClearBackground(RAYWHITE)
         DrawText("Congrats! You created your first raylib-wasm C window!", 140, 200, 20, LIGHTGRAY)

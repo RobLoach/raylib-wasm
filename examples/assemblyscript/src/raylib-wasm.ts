@@ -111,11 +111,6 @@ export const LOG_ERROR = 5
 export const LOG_FATAL = 6
 export const LOG_NONE = 7
 
-// convert a Color to an i32 (to pass over wasm)
-function toColor(color: Color): i32 {
-    return ((color.r & 0xFF) << 24) + ((color.g & 0xFF) << 16) + ((color.b) << 8) + (color.a & 0xFF)
-}
-
 @external("env", "SetTargetFPS")
 export declare function SetTargetFPS(fps: i32) :void
 
@@ -139,14 +134,22 @@ export function InitWindow(width: i32, height:i32, title: string) :void {
     _InitWindow(width, height, String.UTF8.encode(title, true))
 }
 
-@external("env", "ClearBackground")
-declare function _ClearBackground(color: i32) :void
-export function ClearBackground(color: Color): void {
-    _ClearBackground(toColor(color))
+// these have colors spread, but this isn't really needed (since color struct fits inside an int32)
+// here is an example util:
+
+// convert a Color to an i32 (to pass over wasm)
+function toColor(color: Color): i32 {
+    return ((color.r & 0xFF) << 24) + ((color.g & 0xFF) << 16) + ((color.b) << 8) + (color.a & 0xFF)
 }
 
-@external("env", "DrawText")
-declare function _DrawText(text: ArrayBuffer, x: i32, y: i32, fontSize: i32, color: i32) :void
+@external("env", "ClearBackgroundExpanded")
+declare function ClearBackgroundExpanded(r: i32, g: i32, b: i32, a: i32) :void
+export function ClearBackground(color: Color): void {
+    ClearBackgroundExpanded(color.r, color.g, color.b, color.a)
+}
+
+@external("env", "DrawTextExpanded")
+declare function DrawTextExpanded(text: ArrayBuffer, x: i32, y: i32, fontSize: i32, r: i32, g: i32, b: i32, a: i32) :void
 export function DrawText(text: string, x: i32, y: i32, fontSize: i32, color: Color) :void {
-    _DrawText(String.UTF8.encode(text, true), x, y, fontSize, toColor(color))
+    DrawTextExpanded(String.UTF8.encode(text, true), x, y, fontSize, color.r, color.g, color.b, color.a)
 }
