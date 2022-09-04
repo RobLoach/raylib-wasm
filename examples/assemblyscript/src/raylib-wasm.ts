@@ -111,5 +111,11 @@ export const LOG_ERROR = 5
 export const LOG_FATAL = 6
 export const LOG_NONE = 7
 
+// since it takes a string arg, we convert to a UTF8 null-terminated buffer first
 @external("env", "TraceLog")
-export declare function TraceLog(logLevel: i32, text: string) :void
+declare function raylibTraceLog(logLevel: i32, text: ArrayBuffer) :void
+
+export function TraceLog(logLevel: i32, text: string) :void {
+    raylibTraceLog(logLevel, String.UTF8.encode(text, true))
+}
+
