@@ -13,7 +13,7 @@ import {
 
 export function Init() : void {
     InitWindow(800, 450, "raylib-wasm")
-    SetTargetFPS(60)
+    // SetTargetFPS(60)
 }
 
 export function UpdateDrawFrame() : void {
