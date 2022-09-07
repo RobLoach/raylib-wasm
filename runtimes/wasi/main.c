@@ -125,8 +125,8 @@ int main(int argc, char *argv[]) {
     }
 
     //TraceLog(LOG_INFO, "ResizeMemory");
-    runtime->memory.maxPages = 1;
-    ResizeMemory(runtime, 1);
+    runtime->memory.maxPages = 1024;
+    ResizeMemory(runtime, 1024);
 
     IM3Module module;
     result = m3_ParseModule(env, &module, fileData, bytesRead);
