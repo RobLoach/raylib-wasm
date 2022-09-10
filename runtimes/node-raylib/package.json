@@ -1,0 +1,15 @@
+{
+  "name": "node-raylib-wasm",
+  "version": "0.0.1",
+  "description": "",
+  "main": "bin/raylib-wasm-node",
+  "scripts": {
+    "test": "bin/raylib-wasm-node ../../examples/c/build/cart.wasm"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "meow": "^10.1.3",
+    "raylib": "^0.12.0"
+  }
+}
