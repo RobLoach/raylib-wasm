@@ -66,7 +66,7 @@ WASM_IMPORT("DrawTextExpanded")
 void DrawTextExpanded(const char *text, int posX, int posY, int fontSize, uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 WASM_IMPORT("ClearBackground")
-void ClearBackground();
+void ClearBackground(Color color);
 
 WASM_IMPORT("SetTargetFPS")
 void SetTargetFPS(int fps);
@@ -120,7 +120,7 @@ export declare function BeginDrawing() :void
 @external("env", "EndDrawing")
 export declare function EndDrawing() :void
 
-// these need to be wrapped to convert strings & Colors 
+// these need to be wrapped to convert strings & Colors
 
 @external("env", "TraceLog")
 declare function _TraceLog(logLevel: i32, text: ArrayBuffer) :void

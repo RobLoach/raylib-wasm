@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.11)
 project(raylib-wasm
     DESCRIPTION "raylib-wasm: WebAssembly for raylib"
     HOMEPAGE_URL "https://github.com/robloach/raylib-wasm"
-    VERSION 4.1.0
+    VERSION 4.5.0
     LANGUAGES C
 )
 
@@ -13,7 +13,7 @@ if (NOT raylib_FOUND)
         FetchContent_Declare(
         raylib
         GIT_REPOSITORY https://github.com/raysan5/raylib.git
-        GIT_TAG 4.2.0
+        GIT_TAG 4.5.0
     )
     FetchContent_GetProperties(raylib)
     if (NOT raylib_POPULATED) # Have we downloaded raylib yet?

@@ -87,7 +87,7 @@ WASM_IMPORT("DrawTextExpanded")
 void DrawTextExpanded(const char *text, int posX, int posY, int fontSize, int r, int g, int b, int a);
 
 WASM_IMPORT("ClearBackground")
-void ClearBackground();
+void ClearBackground(Color color);
 
 WASM_IMPORT("SetTargetFPS")
 void SetTargetFPS(int fps);
@@ -102,18 +102,18 @@ WASM_IMPORT("TraceLog")
 void TraceLog(int logLevel, const char* text);
 
 // Function wrappers
-void ClearBackground(Color color);
+//void ClearBackground(Color color);
 void DrawText(const char* text, int posX, int posY, int fontSize, Color color);
 
 #ifdef RAYLIB_WASM_IMPLEMENTATION
 #ifndef RAYLIB_WASM_IMPLEMENTATION_ONCE
 #define RAYLIB_WASM_IMPLEMENTATION_ONCE
 
-void ClearBackground(Color color) {
+inline void ClearBackground(Color color) {
     ClearBackgroundExpanded(color.r, color.g, color.b, color.a);
 }
 
-void DrawText(const char* text, int posX, int posY, int fontSize, Color color) {
+inline void DrawText(const char* text, int posX, int posY, int fontSize, Color color) {
     DrawTextExpanded(text, posX, posY, fontSize, color.r, color.g, color.b, color.a);
 }
 
