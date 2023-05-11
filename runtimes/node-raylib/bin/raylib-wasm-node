@@ -1,0 +1,96 @@
+#!/usr/bin/env node
+
+const r = require('raylib')
+const fs = require('fs')
+const pkg = require('../package.json')
+
+const usage = `
+Node.js bindings for raylib.
+  Usage
+    $ node-raylib [file]
+  Examples
+    $ node-raylib - runs data/index.js or index.js
+    $ node-raylib core_basic_window.js
+`
+
+let filename = process.argv[2]
+
+if (filename === '--help') {
+  console.error(usage)
+  process.exit(1)
+}
+
+if (filename === '--version') {
+    console.log(pkg.version)
+    process.exit(0)
+}
+
+if (!filename) {
+    const f1 = path.join(process.cwd(), 'main.wasm')
+    const f2 = path.join(process.cwd(), 'index.wasm')
+    if (fs.existsSync(f1)) {
+        filename = f1
+    } else if (fs.existsSync(f2)) {
+        filename = f2
+    }
+    else {
+        console.error(usage)
+        process.exit(0)
+    }
+}
+
+const wasmBuffer = fs.readFileSync(filename);
+
+
+const memory = new WebAssembly.Memory({ initial: 1024, maximum: 1024 });
+
+const importObject = {
+
+    env: {
+        abortStackOverflow: () => { throw new Error('overflow'); },
+        memory: memory,
+        memoryBase: 1024,
+        STACKTOP: 0,
+        STACK_MAX: memory.buffer.byteLength,
+        table: new WebAssembly.Table({ initial: 0, maximum: 0, element: 'anyfunc' }),
+        tableBase: 0,
+        abort(_msg, _file, line, column) {
+            r.TraceLog(r.LOG_FATAL, _msg)
+            //console.error("abort called at main.ts:" + line + ":" + column);
+        },
+    },
+    imports: {
+        InitWindow(width, height, title) {
+            r.InitWindow(width, height, title)
+        },
+        BindDrawing() {
+            r.BindDrawing()
+        },
+        ClearBackgroundExpanded(r, g, b, a) {
+            r.ClearBackgroundExpanded(r, g, b, a)
+        },
+        DrawTextExpanded(text, posX, posY, fontSize, r, g, b, a) {
+            r. DrawTextExpanded(text, posX, fontSize, r, g, b, a)
+        },
+        ClearBackground() {
+            r.ClearBackground()
+        },
+        SetTargetFPS(fps) {
+            r.SetTargetFPS(fps)
+        },
+        EndDrawing() {
+            r.EndDrawing()
+        },
+        CloseWindow() {
+            r.CloseWindow()
+        },
+        TraceLog(logLevel, text) {
+            r.TraceLog(logLevel, text)
+        }
+    }
+}
+
+WebAssembly.instantiate(wasmBuffer, importObject).then(wasmModule => {
+    // const { Init, UpdateDrawFrame, Close } = wasmModule.instance.exports;
+    //Init();
+});
